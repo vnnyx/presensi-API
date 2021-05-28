@@ -1,7 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const {authenticateToken, permit} = require('../middleware/auth')
+const { authenticateToken } = require("../middleware/auth");
 
-const {} = require("../controllers/presensiController")
+const {
+  getAllPresensi,
+  createPresensi,
+  updatePresensi,
+  deletePresensi,
+  spesificPresensi,
+} = require("../controllers/presensiController");
 
-module.exports = router
+router.get("/", getAllPresensi);
+router.post("/", createPresensi);
+router.put("/:id", updatePresensi);
+router.delete("/:id", deletePresensi);
+router.get("/:id", spesificPresensi);
+
+module.exports = router;

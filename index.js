@@ -6,8 +6,8 @@ const bodyParser = require("body-parser");
 
 const restResponse = require("express-rest-response");
 const options = {
-  showStatusCode: true,
-  showDefaultMessage: true,
+  showStatusCode: false,
+  showDefaultMessage: false,
 };
 
 const db = require("./models");
@@ -16,7 +16,9 @@ app.use(restResponse(options));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/sg", require('./routers/studyGroupRouter'))
+app.use("/sg", require("./routers/studyGroupRouter"));
+app.use("/user", require("./routers/userRouter"));
+app.use("/presensi", require("./routers/presensiRouter"));
 
 app.use((req, res, next) => {
   const err = new Error("");
@@ -33,16 +35,14 @@ app.use((err, req, res, next) => {
 });
 
 const dbOptions = {
-  // Buat ngubah db
-  // alter: true, //nambahin kolom baru
-  // force: true, //ngosongin database waktu ngapus / init
+  alter: true,
+  // force: true,
 };
-
 
 const port = process.env.PORT || 8888;
 db.sequelize.sync(dbOptions).then(() => {
   app.listen(port, () => {
     console.log(`listening on: http://localhost:${port}`);
   });
-  require("./bot")
+  require("./bot");
 });

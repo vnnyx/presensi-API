@@ -1,8 +1,8 @@
 const db = require("../models");
 const md5 = require("md5");
 const jwt = require("jsonwebtoken");
-const generateToken = (id, role) => {
-  return jwt.sign({ id: id, role: role }, process.env.token_secret);
+const generateToken = (id) => {
+  return jwt.sign({ id: id }, process.env.TOKEN_SECRET);
 };
 
 const createUser = (req, res, next) => {
@@ -12,7 +12,7 @@ const createUser = (req, res, next) => {
       : req.body.password;
     db.User.create(req.body)
       .then((result) => {
-        res.rest.success(result);
+        res.rest.success("Anda telah berhasil Mendaftar");
       })
       .catch((err) => {
         res.rest.badRequest(err);
@@ -33,7 +33,7 @@ const loginUser = (req, res, next) => {
     .then((result) => {
       if (result) {
         res.rest.success({
-          token: generateToken(result.id, result.role),
+          token: generateToken(result.id),
         });
       } else {
         res.rest.badRequest("Username / password salah");
@@ -46,7 +46,7 @@ const loginUser = (req, res, next) => {
 
 const getAllUsers = (req, res, next) => {
   db.User.findAll({
-    attributes: ["id", "fullName", "Username", "email", "role"],
+    attributes: ["id", "fullName", "Username", "status"],
   })
     .then((result) => {
       res.rest.success(result);
