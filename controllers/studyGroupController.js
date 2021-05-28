@@ -31,7 +31,9 @@ const updateStudyGroup = async (req, res, next) => {
         id: req.params.id,
       },
     });
+
     if (!sg) return res.rest.badRequest("Id not found");
+
     sg.update(req.body)
       .then((result) => {
         if (result) {
@@ -52,8 +54,11 @@ const deleteStudyGroup = async (req, res, next) => {
     let sg = await db.studyGroup.findOne({
       where: { id: req.params.id },
     });
+
     if (!sg) return res.rest.badRequest("Jadwal Study Group tidak ditemukan");
+
     await sg.destroy();
+
     res.rest.success("Study Group berhasil di delete");
   } catch (error) {
     next(error);
@@ -66,10 +71,12 @@ const spesificStudyGroup = async (req, res, next) => {
       attributes: ["id", "judul", "tanggal", "penutor", "tempat", "deskripsi"],
       where: { id: req.params.id },
     });
+
     if (!data)
       return res.rest.badRequest(
         `Jadwal study group dengan ID ${req.params.id} tidak ditemukan`
       );
+
     res.rest.success({ data });
   } catch (error) {
     next(error);

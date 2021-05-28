@@ -31,7 +31,9 @@ const updatePresensi = async (req, res, next) => {
         id: req.params.id,
       },
     });
+
     if (!presensi) return res.rest.badRequest("Id not found");
+
     presensi
       .update(req.body)
       .then((result) => {
@@ -53,8 +55,11 @@ const deletePresensi = async (req, res, next) => {
     let presensi = await db.presensi.findOne({
       where: { id: req.params.id },
     });
+
     if (!presensi) return res.rest.badRequest("Presensi tidak ditemukan");
+
     await presensi.destroy();
+
     res.rest.success("Presensi berhasil di delete");
   } catch (error) {
     next(error);
@@ -67,10 +72,12 @@ const spesificPresensi = async (req, res, next) => {
       attributes: ["nama", "status"],
       where: { id: req.params.id },
     });
+
     if (!data)
       return res.rest.badRequest(
         `Presensi dengan ID ${req.params.id} tidak ditemukan`
       );
+
     res.rest.success({ data });
   } catch (error) {
     next(error);

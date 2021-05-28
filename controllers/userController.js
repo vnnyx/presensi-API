@@ -1,6 +1,7 @@
 const db = require("../models");
 const md5 = require("md5");
 const jwt = require("jsonwebtoken");
+
 const generateToken = (id) => {
   return jwt.sign({ id: id }, process.env.TOKEN_SECRET);
 };
@@ -10,6 +11,7 @@ const createUser = (req, res, next) => {
     req.body.password = req.body.password
       ? md5(req.body.password)
       : req.body.password;
+
     db.User.create(req.body)
       .then((result) => {
         res.rest.success("Anda telah berhasil Mendaftar");
@@ -24,6 +26,7 @@ const createUser = (req, res, next) => {
 
 const loginUser = (req, res, next) => {
   let { username, password } = req.body;
+
   db.User.findOne({
     where: {
       username: username,

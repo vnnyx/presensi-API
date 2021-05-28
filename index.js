@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 const express = require("express");
 const app = express();
 
@@ -40,9 +41,10 @@ const dbOptions = {
 };
 
 const port = process.env.PORT || 8888;
+
 db.sequelize.sync(dbOptions).then(() => {
   app.listen(port, () => {
     console.log(`listening on: http://localhost:${port}`);
   });
-  require("./bot");
+  // require("./bot");
 });
