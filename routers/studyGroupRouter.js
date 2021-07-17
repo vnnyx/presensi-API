@@ -9,10 +9,15 @@ const {
   deleteStudyGroup,
   spesificStudyGroup,
 } = require("../controllers/studyGroupController");
+const { validate } = require("../middleware/validation");
+const {
+  createStudyGroupSchema,
+  updateStudyGroupSchema,
+} = require("../middleware/validation/schema/studyGroupSchema");
 
 router.get("/", getAllStudyGroup);
-router.post("/", createStudyGroup);
-router.put("/:id", updateStudyGroup);
+router.post("/", validate(createStudyGroupSchema), createStudyGroup);
+router.put("/:id", validate(updateStudyGroupSchema), updateStudyGroup);
 router.delete("/:id", deleteStudyGroup);
 router.get("/:id", spesificStudyGroup);
 

@@ -17,7 +17,7 @@ const getAllStudyGroup = (req, res, next) => {
       attributes: ["id", "judul", "tanggal", "penutor", "tempat", "deskripsi"],
     })
     .then((result) => {
-      res.rest.success({ data });
+      res.rest.success({ result });
     })
     .catch((error) => {
       next(error);
