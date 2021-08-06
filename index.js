@@ -17,7 +17,7 @@ app.use(restResponse(options));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/sg", require("./routers/studyGroupRouter"));
+app.use("/studygroup", require("./routers/studyGroupRouter"));
 app.use("/user", require("./routers/userRouter"));
 app.use("/presensi", require("./routers/presensiRouter"));
 
