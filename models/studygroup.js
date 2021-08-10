@@ -3,47 +3,26 @@ module.exports = (sequelize, DataTypes) => {
     judul: {
       type: DataTypes.TEXT,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Masukkan judul",
-        },
-      },
     },
     tanggal: {
       type: DataTypes.DATE,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Masukkan tanggal study group",
-        },
-      },
     },
     penutor: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Masukkan nama penutor",
-        },
-      },
+    },
+    discordId: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     tempat: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Masukkan channel",
-        },
-      },
     },
     deskripsi: {
       type: DataTypes.TEXT,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Masukkan deskripsi study group",
-        },
-      },
     },
     info: {
       type: DataTypes.BOOLEAN,
