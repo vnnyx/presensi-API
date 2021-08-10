@@ -15,20 +15,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       discordId: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: {
-          name: 'username',
-          msg: 'id telah dipakai',
-        },
-        validate: {
-          notNull: {
-            msg: 'Please enter your discord ID',
-          },
-          len: {
-            msg: 'Masukkan ID yang benar',
-            args: [3, 12],
-          },
-        },
       },
       status: {
         type: DataTypes.STRING,
@@ -44,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       presensi.belongsTo(models.studyGroup, {foreignKey: 'studyGroupId', as: 'studyGroup'})
     };
     return presensi
-  }
+}
   
   
   
