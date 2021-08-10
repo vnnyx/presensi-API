@@ -37,7 +37,7 @@ app.use((err, req, res, next) => {
 
 const dbOptions = {
   alter: true,
-  // force: true,
+  //force: true,
 };
 
 const port = process.env.PORT || 8888;
@@ -46,5 +46,5 @@ db.sequelize.sync(dbOptions).then(() => {
   app.listen(port, () => {
     console.log(`listening on: http://localhost:${port}`);
   });
-  // require("./bot");
+  require("./bot");
 });
