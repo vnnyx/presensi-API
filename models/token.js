@@ -1,39 +1,34 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class presensi extends Model {
+  class Token extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      presensi.belongsTo(models.studyGroup, {
-        foreignKey: "studyGroupId",
-        as: "studyGroup",
+      Token.belongsTo(models.User, {
+        foreignKey: "userId",
         onDelete: "CASCADE",
       });
     }
   }
-  presensi.init(
+  Token.init(
     {
-      nama: {
+      token: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      discordId: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      status: {
-        type: DataTypes.STRING,
+      userId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: "presensi",
+      modelName: "Token",
     }
   );
-  return presensi;
+  return Token;
 };

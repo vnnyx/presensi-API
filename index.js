@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 
 const restResponse = require("express-rest-response");
 const options = {
-  showStatusCode: false,
+  showStatusCode: true,
   showDefaultMessage: false,
 };
 
