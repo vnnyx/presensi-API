@@ -16,8 +16,8 @@ const getAllStudyGroup = (req, res, next) => {
     .findAll({
       attributes: ["id", "judul", "tanggal", "penutor", "tempat", "deskripsi"],
     })
-    .then((result) => {
-      res.rest.success({ result });
+    .then((data) => {
+      res.rest.success({ message: "Get All StudyGroup Berhasil", data });
     })
     .catch((error) => {
       next(error);

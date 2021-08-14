@@ -16,8 +16,8 @@ const getAllPresensi = (req, res, next) => {
     .findAll({
       attributes: ["id", "nama", "status"],
     })
-    .then((result) => {
-      res.rest.success({ data: result });
+    .then((data) => {
+      res.rest.success({ data });
     })
     .catch((error) => {
       next(error);
