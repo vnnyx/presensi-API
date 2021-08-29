@@ -14,7 +14,7 @@ const createPresensi = (req, res) => {
 const getAllPresensi = (req, res, next) => {
   db.presensi
     .findAll({
-      attributes: ["id", "nama", "status"],
+      attributes: ["id", "nama", "status", "studyGroupId"],
     })
     .then((data) => {
       res.rest.success({ data });
@@ -68,15 +68,19 @@ const deletePresensi = async (req, res, next) => {
 
 const spesificPresensi = async (req, res, next) => {
   try {
-    const data = await db.presensi.findOne({
-      attributes: ["nama", "status"],
-      where: { id: req.params.id },
+    const checkStudyGroup = await db.presensi.findOne({
+      where: { studyGroupId: req.params.id },
     });
 
-    if (!data)
+    if (!checkStudyGroup)
       return res.rest.badRequest(
-        `Presensi dengan ID ${req.params.id} tidak ditemukan`
+        `Study Group dengan ID ${req.params.id} tidak ditemukan`
       );
+
+    const data = await db.presensi.findAll({
+      attributes: ["nama", "status"],
+      where: { studyGroupId: req.params.id },
+    });
 
     res.rest.success({ data });
   } catch (error) {

@@ -7,8 +7,10 @@ const createPresensiSchema = [
     .withMessage("DiscordID tidak boleh kosong")
     .isLength({ min: 18, max: 18 })
     .withMessage("Discord ID harus 18 karakter"),
-
   body("status").notEmpty().withMessage("status tidak boleh kosong"),
+  body("studyGroupId")
+    .notEmpty()
+    .withMessage("ID studygroup tidak boleh kosong"),
 ];
 
 const updatePresensiSchema = [

@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       presensi.belongsTo(models.studyGroup, {
         foreignKey: "studyGroupId",
-        as: "studyGroup",
         onDelete: "CASCADE",
       });
     }
@@ -27,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       status: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      studyGroupId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },

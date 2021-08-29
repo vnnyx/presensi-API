@@ -66,4 +66,9 @@ const findOneByUsername = async (username) => {
   return await db.User.findOne({ where: { username: username } });
 };
 
-module.exports = { createUser, loginUser, getAllUsers, findOneByUsername };
+module.exports = {
+  createUser,
+  loginUser,
+  getAllUsers,
+  findOneByUsername,
+};
