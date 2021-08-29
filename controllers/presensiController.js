@@ -68,8 +68,9 @@ const deletePresensi = async (req, res, next) => {
 
 const spesificPresensi = async (req, res, next) => {
   try {
-    const checkStudyGroup = await db.presensi.findOne({
-      where: { studyGroupId: req.params.id },
+    const checkStudyGroup = await db.studyGroup.findOne({
+      where: { id: req.params.id },
+      include: db.presensi,
     });
 
     if (!checkStudyGroup)
@@ -77,12 +78,7 @@ const spesificPresensi = async (req, res, next) => {
         `Study Group dengan ID ${req.params.id} tidak ditemukan`
       );
 
-    const data = await db.presensi.findAll({
-      attributes: ["nama", "status"],
-      where: { studyGroupId: req.params.id },
-    });
-
-    res.rest.success({ data });
+    return res.rest.success({ message: "", data: checkStudyGroup });
   } catch (error) {
     next(error);
   }
