@@ -1,4 +1,5 @@
 const db = require("../models");
+const { Op } = require("sequelize");
 
 const createStudyGroup = (req, res) => {
   db.studyGroup
@@ -83,10 +84,34 @@ const spesificStudyGroup = async (req, res, next) => {
   }
 };
 
+const findStudyGroup = async (req, res, next) => {
+  try {
+    let tanggal = new Date(req.body.tanggal);
+    let tanggal2 = new Date(req.body.tanggal);
+
+    tanggal2.setDate(tanggal.getDate() + 1);
+
+    const data = await db.studyGroup.findAll({
+      where: {
+        judul: { [Op.like]: `%${req.body.judul || ""}%` },
+        penutor: { [Op.like]: `%${req.body.penutor || ""}%` },
+        tanggal: {
+          [Op.between]: [tanggal, tanggal2],
+        },
+      },
+    });
+
+    return res.rest.success({ message: "Find StudyGroup Berhasil", data });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createStudyGroup,
   getAllStudyGroup,
   updateStudyGroup,
   deleteStudyGroup,
   spesificStudyGroup,
+  findStudyGroup,
 };

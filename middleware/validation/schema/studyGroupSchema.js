@@ -39,7 +39,12 @@ const updateStudyGroupSchema = [
     .optional(),
 ];
 
+const findStudyGroupSchema = [
+  body("tanggal").notEmpty().withMessage("tanggal tidak boleh kosong"),
+];
+
 module.exports = {
   createStudyGroupSchema,
   updateStudyGroupSchema,
+  findStudyGroupSchema,
 };
