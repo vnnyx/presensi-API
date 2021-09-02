@@ -53,22 +53,27 @@ async function gotreaction(re) {
             collected.forEach((r) => {
               r.users.cache.forEach((u) => {
                 if (u.id != process.env.BOT_ID) {
-                  if (r.emoji.name === "✅") {
-                    const nhadir = {
-                      discordId: u.id,
-                      nama: question.guild.member(u.id).displayName,
-                      status: "hadir",
-                      studyGroupId: sg.id,
-                    };
+                  let nhadir = {
+                    discordId: u.id,
+                    nama: question.guild.member(u.id).displayName,
+                    status: r.emoji.name === "✅" ? "hadir" : "tidak hadir",
+                    studyGroupId: sg.id,
+                  };
+
+                  if (!dhadir.length) {
                     dhadir.push(nhadir);
                   } else {
-                    const nhadir2 = {
-                      discordId: u.id,
-                      nama: question.guild.member(u.id).displayName,
-                      status: "tidak hadir",
-                      studyGroupId: sg.id,
-                    };
-                    dhadir.push(nhadir2);
+                    const index = dhadir.findIndex((x) => x.discordId === u.id);
+                    if (index === -1) {
+                      dhadir.push(nhadir);
+                    } else {
+                      dhadir[index].status =
+                        (dhadir[index].status == "tidak hadir" &&
+                          nhadir.status == "hadir") ||
+                        dhadir[index].status == "hadir"
+                          ? "hadir"
+                          : "tidak hadir";
+                    }
                   }
                 }
               });
