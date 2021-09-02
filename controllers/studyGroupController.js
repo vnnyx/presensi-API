@@ -15,7 +15,15 @@ const createStudyGroup = (req, res) => {
 const getAllStudyGroup = (req, res, next) => {
   db.studyGroup
     .findAll({
-      attributes: ["id", "judul", "tanggal", "penutor", "tempat", "deskripsi"],
+      attributes: [
+        "id",
+        "judul",
+        "tanggal",
+        "penutor",
+        "divisi",
+        "tempat",
+        "deskripsi",
+      ],
     })
     .then((data) => {
       res.rest.success({ message: "Get All StudyGroup Berhasil", data });
@@ -69,7 +77,15 @@ const deleteStudyGroup = async (req, res, next) => {
 const spesificStudyGroup = async (req, res, next) => {
   try {
     const data = await db.studyGroup.findOne({
-      attributes: ["id", "judul", "tanggal", "penutor", "tempat", "deskripsi"],
+      attributes: [
+        "id",
+        "judul",
+        "tanggal",
+        "penutor",
+        "divisi",
+        "tempat",
+        "deskripsi",
+      ],
       where: { id: req.params.id },
     });
 
