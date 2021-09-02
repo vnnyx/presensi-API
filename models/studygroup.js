@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      discordId: {
+      divisi: {
         type: DataTypes.STRING,
         allowNull: false,
       },
