@@ -4,9 +4,13 @@ const { Op } = require("sequelize");
 const createStudyGroup = (req, res) => {
   db.studyGroup
     .create(req.body)
-    .then(() => {
-      res.rest.success("Jadwal Study Group telah ditambahkan");
+    .then((data) => {
+      res.rest.success({
+        message: "Jadwal Study Group telah ditambahkan",
+        data: data.id,
+      });
     })
+
     .catch((err) => {
       res.rest.badRequest("Jadwal gagal ditambahkan");
     });
