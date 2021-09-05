@@ -12,12 +12,12 @@ async function gotreaction(re) {
   if (re.content == "!absen") {
     re.delete();
     if (!boton) {
-      boton = true;
       const name = re.guild.member(re.author.id).displayName;
       let sg = await db.studyGroup.findOne({
         where: { penutor: name, selesai: false, info: true },
       });
       if (sg) {
+        boton = true;
         const exampleEmbed = new Discord.MessageEmbed()
           .setColor("#ffa90a")
           .setTitle(sg.judul)
@@ -49,7 +49,7 @@ async function gotreaction(re) {
             time: 1000 * parseInt(process.env.ABSEN_INTERVAL),
           });
           collector.on("end", (collected) => {
-            dhadir = [];
+            let dhadir = [];
             collected.forEach((r) => {
               r.users.cache.forEach((u) => {
                 if (u.id != process.env.BOT_ID) {
