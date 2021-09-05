@@ -104,13 +104,17 @@ async function gotreaction(re) {
 }
 
 const infoSg = async () => {
-  let cek = await db.studyGroup.findOne({ where: { info: false } });
+  let cek = await db.studyGroup.findOne({
+    where: { info: false },
+    order: [["tanggal", "ASC"]],
+  });
   if (cek) {
     let tanggal = new Date(cek.tanggal);
     let dnow = new Date(Date.now());
-    let t = tanggal.getDate();
-    let tnow = dnow.getDate();
-    if (t === tnow + 1) {
+    let t = tanggal.getTime();
+    let tnow = dnow.getTime();
+    const diff = t - tnow;
+    if (diff / (1000 * 3600 * 24) >= 0 && diff / (1000 * 3600 * 24) < 2) {
       const channel = client.channels.cache.get(process.env.CHANNEL_INFO_ID);
       const embed = new Discord.MessageEmbed()
         .setColor("#ffa90a")
