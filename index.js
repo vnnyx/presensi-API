@@ -49,5 +49,5 @@ db.sequelize.sync(dbOptions).then(() => {
   app.listen(port, () => {
     console.log(`listening on: http://localhost:${port}`);
   });
-  require("./bot");
+  // require("./bot");
 });
