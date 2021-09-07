@@ -109,7 +109,7 @@ const findStudyGroup = async (req, res, next) => {
     let tanggal = new Date(req.body.tanggal);
     let tanggal2 = new Date(req.body.tanggal);
 
-    tanggal2.setDate(tanggal.getDate() + 1);
+    tanggal2.setHours(tanggal.getHours() + 23);
 
     const data = await db.studyGroup.findAll({
       where: {
