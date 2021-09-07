@@ -137,7 +137,7 @@ const infoSg = async () => {
           "RPLGDC Lab",
           "https://media.discordapp.net/attachments/847092542570889236/847475968431751168/RPLGDC.png?width=701&height=701"
         );
-      channel.send("Jangan Lupa Hadir Besok @everyone", embed);
+      channel.send("Jangan Lupa ada SG @everyone", embed);
       cek.info = true;
       await cek.save();
     }
