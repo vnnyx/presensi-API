@@ -1,11 +1,16 @@
 const db = require("../models");
+const { Op } = require("sequelize");
 
 const createStudyGroup = (req, res) => {
   db.studyGroup
     .create(req.body)
-    .then(() => {
-      res.rest.success("Jadwal Study Group telah ditambahkan");
+    .then((data) => {
+      res.rest.success({
+        message: "Jadwal Study Group telah ditambahkan",
+        data: data.id,
+      });
     })
+
     .catch((err) => {
       res.rest.badRequest("Jadwal gagal ditambahkan");
     });
@@ -14,10 +19,18 @@ const createStudyGroup = (req, res) => {
 const getAllStudyGroup = (req, res, next) => {
   db.studyGroup
     .findAll({
-      attributes: ["id", "judul", "tanggal", "penutor", "tempat", "deskripsi"],
+      attributes: [
+        "id",
+        "judul",
+        "tanggal",
+        "penutor",
+        "divisi",
+        "tempat",
+        "deskripsi",
+      ],
     })
-    .then((result) => {
-      res.rest.success({ result });
+    .then((data) => {
+      res.rest.success({ message: "Get All StudyGroup Berhasil", data });
     })
     .catch((error) => {
       next(error);
@@ -68,7 +81,15 @@ const deleteStudyGroup = async (req, res, next) => {
 const spesificStudyGroup = async (req, res, next) => {
   try {
     const data = await db.studyGroup.findOne({
-      attributes: ["id", "judul", "tanggal", "penutor", "tempat", "deskripsi"],
+      attributes: [
+        "id",
+        "judul",
+        "tanggal",
+        "penutor",
+        "divisi",
+        "tempat",
+        "deskripsi",
+      ],
       where: { id: req.params.id },
     });
 
@@ -83,10 +104,34 @@ const spesificStudyGroup = async (req, res, next) => {
   }
 };
 
+const findStudyGroup = async (req, res, next) => {
+  try {
+    let tanggal = new Date(req.body.tanggal);
+    let tanggal2 = new Date(req.body.tanggal);
+
+    tanggal2.setHours(tanggal.getHours() + 23);
+
+    const data = await db.studyGroup.findAll({
+      where: {
+        judul: { [Op.like]: `%${req.body.judul || ""}%` },
+        penutor: { [Op.like]: `%${req.body.penutor || ""}%` },
+        tanggal: {
+          [Op.between]: [tanggal, tanggal2],
+        },
+      },
+    });
+
+    return res.rest.success({ message: "Find StudyGroup Berhasil", data });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createStudyGroup,
   getAllStudyGroup,
   updateStudyGroup,
   deleteStudyGroup,
   spesificStudyGroup,
+  findStudyGroup,
 };

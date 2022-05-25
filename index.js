@@ -1,17 +1,20 @@
 require("dotenv").config();
 
 const express = require("express");
+const cors = require("cors");
 const app = express();
 
 const bodyParser = require("body-parser");
 
 const restResponse = require("express-rest-response");
 const options = {
-  showStatusCode: false,
+  showStatusCode: true,
   showDefaultMessage: false,
 };
 
 const db = require("./models");
+
+app.use(cors());
 
 app.use(restResponse(options));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -46,5 +49,5 @@ db.sequelize.sync(dbOptions).then(() => {
   app.listen(port, () => {
     console.log(`listening on: http://localhost:${port}`);
   });
-  require("./bot");
+  // require("./bot");
 });

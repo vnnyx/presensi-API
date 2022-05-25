@@ -1,39 +1,52 @@
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  const studyGroup = sequelize.define("studyGroup", {
-    judul: {
-      type: DataTypes.TEXT,
-      allowNull: false,
+  class studyGroup extends Model {
+    static associate(models) {
+      studyGroup.hasMany(models.presensi, { foreignKey: "studyGroupId" });
+    }
+  }
+  studyGroup.init(
+    {
+      judul: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      tanggal: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      penutor: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      divisi: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      tempat: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      deskripsi: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      info: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      selesai: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
     },
-    tanggal: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    penutor: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    discordId: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    tempat: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    deskripsi: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    info: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    selesai: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-  });
+    {
+      sequelize,
+      modelName: "studyGroup",
+    }
+  );
   return studyGroup;
 };
